@@ -2,11 +2,6 @@ const url = "https://www.fishwatch.gov/api/species";
 let array0 = [];
 let currentPosition = 0;
 
-document.querySelector(".next").addEventListener("click", increase);
-prev = document.querySelector(".prev").addEventListener("click", decrease);
-let fishName = document.querySelector(".name");
-let info = document.querySelector(".info");
-
 
 fetch(url)
 .then((res) => {
@@ -55,19 +50,22 @@ resume = (array) => {
     currentPosition++;
     if (currentPosition >= array.length) {
       currentPosition = 0;
-      return currentPosition;
     }
-    return currentPosition;
   };
 
   decrease = () => {
     if ((currentPosition = 0)) {
       currentPosition = array.length - 1;
-      return currentPosition;
     }
     currentPosition--;
-    return currentPosition;
+    console.log(currentPosition);
   };
+
+  document.querySelector(".next").addEventListener("click", increase());
+  prev = document.querySelector(".prev").addEventListener("click", decrease);
+  let fishName = document.querySelector(".name");
+  let info = document.querySelector(".info");
+
   transitionSlide(array[currentPosition]["Image Gallery"]);
   fishName.innerText = array[currentPosition]["Species Name"];
   let x =
