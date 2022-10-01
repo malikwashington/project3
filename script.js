@@ -2,21 +2,18 @@ const url = "https://www.fishwatch.gov/api/species";
 let array0 = [];
 let currentPosition = 0;
 
-
 fetch(url)
-.then((res) => {
-  let data = res.json();
-  return data;
-})
-.then((data) => {
-  array0 = data;
-  resume(array0);
-})
-.catch((err) => {
-  console.error("this ain't right", err);
-});
-
-
+  .then((res) => {
+    let data = res.json();
+    return data;
+  })
+  .then((data) => {
+    array0 = data;
+    resume(array0);
+  })
+  .catch((err) => {
+    console.error("this ain't right", err);
+  });
 
 transitionSlide = (arr) => {
   let gallery = document.querySelector(".js-gallery");
@@ -44,36 +41,45 @@ transitionSlide = (arr) => {
   setInterval(called, 1500);
 };
 
-
-resume = (array) => {  
+resume = (array) => {
   increase = () => {
+    console.log(currentPosition)
     currentPosition++;
+    console.log(currentPosition)
     if (currentPosition >= array.length) {
       currentPosition = 0;
     }
+    information(array[currentPosition]);
+    transitionSlide(array[currentPosition]["Image Gallery"]);
   };
-
+  
   decrease = () => {
     if ((currentPosition = 0)) {
-      currentPosition = array.length - 1;
+      currentPosition = array.length;
     }
     currentPosition--;
-    console.log(currentPosition);
+    information(array[currentPosition]);
+    transitionSlide(array[currentPosition]["Image Gallery"]);
   };
-
-  document.querySelector(".next").addEventListener("click", increase());
+  
+  document.querySelector(".next").addEventListener("click", increase);
   prev = document.querySelector(".prev").addEventListener("click", decrease);
+  information(array[currentPosition])
+  transitionSlide(array[currentPosition]["Image Gallery"]);
+};
+
+function information(array)
+{
   let fishName = document.querySelector(".name");
   let info = document.querySelector(".info");
-
-  transitionSlide(array[currentPosition]["Image Gallery"]);
-  fishName.innerText = array[currentPosition]["Species Name"];
+  
+  fishName.innerText = array["Species Name"];
   let x =
-    array[currentPosition]["Biology"] +
-    array[currentPosition]["Physical Description"] +
-    array[currentPosition]["Habitat"] +
-    array[currentPosition]["Location"] +
-    array[currentPosition]["Taste"] +
-    array[currentPosition]["Texture"];
+  array["Biology"] +
+  array["Physical Description"] +
+  array["Habitat"] +
+  array["Location"] +
+  array["Taste"] +
+  array["Texture"];
   info.innerHTML = x;
 }
