@@ -16,7 +16,9 @@ fetch(url)
   });
 
 transitionSlide = (arr) => {
+  console.log(arr)
   let gallery = document.querySelector(".js-gallery");
+
   arr.forEach((element) => {
     let li = document.createElement("li");
     li.setAttribute("class", "gallery__item js-gallery-item");
@@ -43,16 +45,19 @@ transitionSlide = (arr) => {
 
 resume = (array) => {
   increase = () => {
-    console.log(currentPosition)
+    // console.log(currentPosition)
     currentPosition++;
-    console.log(currentPosition)
+    // console.log(currentPosition)
+    // console.log(array)
     if (currentPosition >= array.length) {
       currentPosition = 0;
     }
     information(array[currentPosition]);
     transitionSlide(array[currentPosition]["Image Gallery"]);
+      // console.log(array[currentPosition]["Image Gallery"]);
+
   };
-  
+
   decrease = () => {
     if ((currentPosition = 0)) {
       currentPosition = array.length;
@@ -61,7 +66,7 @@ resume = (array) => {
     information(array[currentPosition]);
     transitionSlide(array[currentPosition]["Image Gallery"]);
   };
-  
+
   document.querySelector(".next").addEventListener("click", increase);
   prev = document.querySelector(".prev").addEventListener("click", decrease);
   information(array[currentPosition])
@@ -72,7 +77,7 @@ function information(array)
 {
   let fishName = document.querySelector(".name");
   let info = document.querySelector(".info");
-  
+
   fishName.innerText = array["Species Name"];
   let x =
   array["Biology"] +
@@ -83,3 +88,5 @@ function information(array)
   array["Texture"];
   info.innerHTML = x;
 }
+
+
