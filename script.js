@@ -1,6 +1,8 @@
+//Edits from Raul are marked and greatly appreciated
 const url = "https://www.fishwatch.gov/api/species";
 let array0 = [];
 let currentPosition = 0;
+let intervalID; //RAUL
 
 fetch(url)
   .then((res) => {
@@ -16,8 +18,10 @@ fetch(url)
   });
 
 transitionSlide = (arr) => {
-  console.log(arr)
   let gallery = document.querySelector(".js-gallery");
+  //RAUL (I feel like I should have thought of this solution -Malik)
+  gallery.innerHTML = "";
+  stop()
 
   arr.forEach((element) => {
     let li = document.createElement("li");
@@ -40,26 +44,22 @@ transitionSlide = (arr) => {
       gallery.style.transform = "translateX(0)";
     }
   };
-  setInterval(called, 1500);
+  intervalID = setInterval(called, 1800);
 };
 
 resume = (array) => {
   increase = () => {
-    // console.log(currentPosition)
     currentPosition++;
-    // console.log(currentPosition)
-    // console.log(array)
     if (currentPosition >= array.length) {
       currentPosition = 0;
     }
     information(array[currentPosition]);
     transitionSlide(array[currentPosition]["Image Gallery"]);
-      // console.log(array[currentPosition]["Image Gallery"]);
-
   };
 
   decrease = () => {
-    if ((currentPosition = 0)) {
+    console.log("we here")
+    if ((currentPosition == 0)) {
       currentPosition = array.length;
     }
     currentPosition--;
@@ -68,11 +68,12 @@ resume = (array) => {
   };
 
   document.querySelector(".next").addEventListener("click", increase);
-  prev = document.querySelector(".prev").addEventListener("click", decrease);
+  document.querySelector(".prev").addEventListener("click", decrease);
   information(array[currentPosition])
   transitionSlide(array[currentPosition]["Image Gallery"]);
 };
-
+console.log(document.querySelector(".prev"));
+console.log("we here")
 function information(array)
 {
   let fishName = document.querySelector(".name");
@@ -89,4 +90,6 @@ function information(array)
   info.innerHTML = x;
 }
 
-
+function stop() {
+  clearInterval(intervalID)
+}
